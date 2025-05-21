@@ -1,4 +1,3 @@
-# src/data_prep.py
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -7,7 +6,9 @@ def load_and_preprocess(path="data/ames.csv"):
     df = pd.read_csv(path)
     
     # Drop columns with too many nulls or IDs
-    df = df.drop(columns=["Alley", "PoolQC", "Fence", "MiscFeature", "Id"])
+    cols_to_drop = ["Alley", "PoolQC", "Fence", "MiscFeature", "Id"]
+    df = df.drop(columns=[col for col in cols_to_drop if col in df.columns])
+
 
     # Fill NA
     df.fillna(df.median(numeric_only=True), inplace=True)
